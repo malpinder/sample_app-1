@@ -13,7 +13,7 @@ describe "Authentication" do
 		it { should have_link('Profile',		href: user_path(user)) }
 		it { should have_link('Settings',		href: edit_user_path(user)) }
 		it { should have_link('Sign out', 		href: signout_path) }
-		it { should_not have_link('Sign in',		href: signin_path) }
+		it { should_not have_link('Sign in',	href: signin_path) }
 	end
 
 
@@ -78,8 +78,6 @@ describe "Authentication" do
 			end
 		end
 
-
-
 		describe "for non-signed in users" do
 			let(:user) { FactoryGirl.create(:user) }
 
@@ -131,6 +129,19 @@ describe "Authentication" do
 				describe "submitting a PATCH request to the Users#update action" do
 					before { patch user_path(wrong_user) }
 					specify { expect(response).to redirect_to(root_path) }
+				end
+			end
+
+			describe "in the Microposts controller" do
+
+				describe "submitting to the create action" do
+					before { post microposts_path }
+					specify { expect(response). to redirect_to(signin_path) }
+				end
+
+				describe "submitting to the destroy action" do
+					before { delete micropost_path(FactoryGirl.create(:micropost)) }
+					specify{ expect(response).to redirect_to(signin_path) }
 				end
 			end
 		end

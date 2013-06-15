@@ -11,6 +11,11 @@ gem 'bootstrap-will_paginate', '0.0.9'
 group :development, :test do
   gem 'sqlite3', '1.3.7'
   gem 'rspec-rails', '2.13.0'
+  #Optional gems
+    #gem 'guard-rspec', '2.5.0'
+    #gem 'spork-rails,' github: 'railstutorial/spork-rails'
+    #gem 'guard-spork', '1.5.0'
+    #gem ''childprocess', '0.3.6'
 end
 
 group :test do
@@ -31,8 +36,12 @@ gem 'jquery-rails', '2.2.1'
 gem 'turbolinks', '1.0.0'
 gem 'jbuilder', '1.0.1'
 
+group :doc do
+  gem 'sdoc', '0.3.20', require: false
+end
+
 group :production do
-  gem 'pg', '0.14.1'
+  gem 'pg', '0.15.1'
 end
 
 # To use ActiveModel has_secure_password

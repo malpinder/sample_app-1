@@ -1,10 +1,10 @@
-=begin 
+
 require 'spec_helper'
 
 describe "Static pages" do
 
   describe "Home page" do
-
+=begin 
     it "should have the content 'Sample App'" do
       visit '/static_pages/home'
       expect(page).to have_content('Sample App')
@@ -18,7 +18,6 @@ describe "Static pages" do
     	expect(page).not_to have_title('| Home')
     end
   end
-
 describe "Help page" do
 
 	it "should have content 'Help'" do
@@ -30,7 +29,6 @@ describe "Help page" do
 		expect(page).to have_title("Ruby on Rails Tutorial Sample App | Help")
 	end
 end
-
 describe "About page" do
 	it "should have the content 'About Us'" do
 		visit '/static_pages/about'
@@ -41,7 +39,6 @@ describe "About page" do
 		expect(page).to have_title("Ruby on Rails Tutorial Sample App | About")
 	end
 end
-
 describe "Contact page" do
 	it "should have content 'Contact Us'" do
 		visit 'contact_path'
@@ -51,8 +48,27 @@ describe "Contact page" do
 		visit 'contact_path'
 		expect(page).to have_title("Ruby on Rails Tutorial Sample App | Contact Us")
 	end
-
-end
-
 end
 =end
+
+
+	describe "for signed-in users" do
+		let(:user) { FactoryGirl.create(:user) }
+		before do
+			FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
+			FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet") 
+			sign_in user
+			visit root_path
+		end
+
+		it "should render the user's feed" do
+			user.feed.each do |item|
+				expect(page). to have_selector("li##{item.id}", text: item.content)
+			end
+		end
+	end
+
+
+
+end
+end
